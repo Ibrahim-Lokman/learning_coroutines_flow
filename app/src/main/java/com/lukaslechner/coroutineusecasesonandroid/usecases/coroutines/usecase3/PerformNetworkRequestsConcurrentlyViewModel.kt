@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.lukaslechner.coroutineusecasesonandroid.base.BaseViewModel
 import com.lukaslechner.coroutineusecasesonandroid.mock.MockApi
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class PerformNetworkRequestsConcurrentlyViewModel(
@@ -44,10 +45,10 @@ class PerformNetworkRequestsConcurrentlyViewModel(
 
         viewModelScope.launch {
             try {
-                val versionFeatures = listOf(
-                    oreoFeaturesDeferred.await(),
-                    pieFeaturesDeferred.await(),
-                    android10FeaturesDeferred.await()
+            val versionFeatures = awaitAll(
+                    oreoFeaturesDeferred,
+                    pieFeaturesDeferred,
+                    android10FeaturesDeferred
                 )
                 uiState.value = UiState.Success(versionFeatures)
             } catch (exception: Exception) {
