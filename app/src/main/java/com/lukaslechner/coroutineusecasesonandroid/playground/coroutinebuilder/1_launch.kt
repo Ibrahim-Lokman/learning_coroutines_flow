@@ -10,6 +10,8 @@ fun main() = runBlocking<Unit> {
            networkRequest()
          println("result received")
         }
+
+    job.join() // wait for the job to finish
     println("end of runblocking")
 }
 
