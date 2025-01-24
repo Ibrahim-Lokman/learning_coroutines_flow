@@ -4,13 +4,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-fun main() {
-    // run blocking is a coroutine builder that blocks the current thread until the coroutine inside it is finished executing
-    runBlocking {
+//
+fun main() = runBlocking<Unit> {
         launch {
             delay(1000)
             println("printed from within coroutine")
         }
-    }
-    println("Main ends")
+
+    println("Main ends 2")
 }
