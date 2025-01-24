@@ -6,7 +6,11 @@ import kotlinx.coroutines.launch
 
 fun main() {
         GlobalScope.launch {
-        delay(1000)
+        delay(500)
             println("printed from within coroutine")
         }
+
+    Thread.sleep(1000)
+    println("Main ends")
+
 }
