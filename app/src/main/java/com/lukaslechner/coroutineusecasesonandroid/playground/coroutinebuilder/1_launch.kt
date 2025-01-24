@@ -1,17 +1,20 @@
 package com.lukaslechner.coroutineusecasesonandroid.playground.coroutinebuilder
 
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 
 fun main() = runBlocking<Unit> {
-     val job =   launch {
+     val job =   launch(start = CoroutineStart.LAZY) {
            networkRequest()
          println("result received")
         }
 
-    job.join() // wait for the job to finish
+    delay(200)
+    job.start()
+    job.join()
     println("end of runblocking")
 }
 
