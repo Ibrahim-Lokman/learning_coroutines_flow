@@ -3,14 +3,15 @@ package com.lukaslechner.coroutineusecasesonandroid.playground.coroutinebuilder
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 fun main() {
-        GlobalScope.launch {
-        delay(500)
+    // run blocking is a coroutine builder that blocks the current thread until the coroutine inside it is finished executing
+    runBlocking {
+        launch {
+            delay(1000)
             println("printed from within coroutine")
         }
-
-    Thread.sleep(1000)
+    }
     println("Main ends")
-
 }
