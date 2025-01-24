@@ -4,12 +4,17 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-//
-fun main() = runBlocking<Unit> {
-        launch {
-            delay(1000)
-            println("printed from within coroutine")
-        }
 
-    println("Main ends 2")
+fun main() = runBlocking<Unit> {
+     val job =   launch {
+           networkRequest()
+         println("result received")
+        }
+    println("end of runblocking")
+}
+
+suspend fun networkRequest() : String {
+    delay(500)
+    println("network result")
+    return "network result"
 }
