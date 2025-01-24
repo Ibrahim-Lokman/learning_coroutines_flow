@@ -3,6 +3,8 @@ package com.lukaslechner.coroutineusecasesonandroid.usecases.coroutines.usecase4
 import androidx.lifecycle.viewModelScope
 import com.lukaslechner.coroutineusecasesonandroid.base.BaseViewModel
 import com.lukaslechner.coroutineusecasesonandroid.mock.MockApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class VariableAmountOfNetworkRequestsViewModel(
@@ -27,5 +29,20 @@ class VariableAmountOfNetworkRequestsViewModel(
 
     fun performNetworkRequestsConcurrently() {
 
+        uiState.value = UiState.Loading
+
+        viewModelScope.launch {
+            try{
+                val androidVersions = mockApi.getRecentAndroidVersions()
+                val versionFeatures = androidVersions.map { version ->
+                    async {
+                        mockApi.getAndroidVersionFeatures(version.apiLevel)
+                    }
+                }.awaitAll()
+                uiState.value = UiState.Success(versionFeatures)
+            } catch (exception: Exception) {
+                uiState.value = UiState.Error("Network Request failed")
+            }
+        }
     }
 }
